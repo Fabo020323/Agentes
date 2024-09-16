@@ -44,7 +44,10 @@ public class Document {
     private TipoDocument tipo_doc;
     private String otros_autor;
     private String otros_titulos;
-    private  Ejemplares;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "document_id")
+    private List<Ejemplar> ejemplares;
+
 
 
 }

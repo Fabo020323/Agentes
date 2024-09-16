@@ -1,6 +1,8 @@
 // com.part_of_fa.usuarios_documentos.auth.service.JwtRequestFilter.java
 package com.part_of_fa.usuarios_documentos.utils.auth.service;
 
+import com.part_of_fa.usuarios_documentos.user.service.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.context.SecurityContextHolder;
