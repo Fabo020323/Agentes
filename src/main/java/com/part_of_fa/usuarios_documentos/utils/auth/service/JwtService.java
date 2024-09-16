@@ -10,7 +10,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY = "your_secret_key"; // Debes almacenar esto de forma segura
+    private final String SECRET_KEY = "yoursecretkey"; // Debes almacenar esto de forma segura
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

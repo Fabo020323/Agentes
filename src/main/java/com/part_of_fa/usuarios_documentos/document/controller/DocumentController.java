@@ -1,6 +1,6 @@
 package com.part_of_fa.usuarios_documentos.document.controller;
 
-import com.part_of_fa.usuarios_documentos.document.entity.Document;
+import com.part_of_fa.usuarios_documentos.document.entity.Docu;
 import com.part_of_fa.usuarios_documentos.document.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,25 +15,26 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
+
     @GetMapping
-    public List<Document> getAllDocuments() {
+    public List<Docu> getAllDocuments() {
         return documentService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Document> getDocumentById(@PathVariable Long id) {
+    public ResponseEntity<Docu> getDocumentById(@PathVariable String id) {
         return documentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Document createDocument(@RequestBody Document document) {
+    public Docu createDocument(@RequestBody Docu document) {
         return documentService.save(document);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDocument(@PathVariable String id) {
         documentService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

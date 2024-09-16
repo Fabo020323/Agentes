@@ -1,9 +1,9 @@
 package com.part_of_fa.usuarios_documentos.ejemplares.repository;
 
 import com.part_of_fa.usuarios_documentos.ejemplares.entity.Ejemplar;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface EjemplarRepository extends JpaRepository<Ejemplar, String> {
+@Repository
+public interface EjemplarRepository extends MongoRepository<Ejemplar, String> {
 }
-
-

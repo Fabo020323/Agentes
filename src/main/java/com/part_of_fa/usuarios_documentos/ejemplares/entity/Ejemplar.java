@@ -1,7 +1,7 @@
 package com.part_of_fa.usuarios_documentos.ejemplares.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@Entity
+@Document(collection = "ejemplares")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ejemplar {

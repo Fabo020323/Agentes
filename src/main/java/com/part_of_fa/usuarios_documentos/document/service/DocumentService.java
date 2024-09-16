@@ -1,6 +1,6 @@
 package com.part_of_fa.usuarios_documentos.document.service;
 
-import com.part_of_fa.usuarios_documentos.document.entity.Document;
+import com.part_of_fa.usuarios_documentos.document.entity.Docu;
 import com.part_of_fa.usuarios_documentos.document.repository.DocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +14,19 @@ public class DocumentService {
     @Autowired
     private DocumentRepository documentRepository;
 
-    public List<Document> findAll() {
+    public List<Docu> findAll() {
         return documentRepository.findAll();
     }
 
-    public Optional<Document> findById(Long id) {
+    public Optional<Docu> findById(String id) {
         return documentRepository.findById(id);
     }
 
-    public Document save(Document document) {
+    public Docu save(Docu document) {
         return documentRepository.save(document);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         documentRepository.deleteById(id);
     }
 }

@@ -1,10 +1,9 @@
 package com.part_of_fa.usuarios_documentos.document.repository;
 
-
-import com.part_of_fa.usuarios_documentos.document.entity.Document;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.part_of_fa.usuarios_documentos.document.entity.Docu;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<Document, Long> {
+public interface DocumentRepository extends MongoRepository<Docu, String> {
 }
