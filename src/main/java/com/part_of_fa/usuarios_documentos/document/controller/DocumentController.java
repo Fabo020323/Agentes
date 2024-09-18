@@ -15,30 +15,34 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<Docu> getAllDocuments() {
         return documentService.findAll();
     }
 
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<Docu> getDocumentById(@PathVariable String id) {
         return documentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public Docu createDocument(@RequestBody Docu document) {
         return documentService.save(document);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocument(@PathVariable String id) {
         documentService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/{documentId}/addEjemplar")
     public ResponseEntity<Docu> addEjemplarToDocument(@PathVariable String documentId, @RequestParam String ejemplarCodBarra) {
         Docu updatedDocu = documentService.addEjemplarToDocument(documentId, ejemplarCodBarra);
@@ -50,6 +54,7 @@ public class DocumentController {
     }
 
     // Método en el controlador para filtrar documentos según los criterios
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/filter")
     public List<Docu> filterDocuments(@RequestBody Docu filterCriteria) {
         return documentService.filterDocuments(filterCriteria);

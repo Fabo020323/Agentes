@@ -16,6 +16,7 @@ public class EjemplarController {
     private final EjemplarService ejemplarService;
 
     // Crear un nuevo ejemplar
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<Ejemplar> createEjemplar(@RequestBody Ejemplar ejemplar) {
         Ejemplar createdEjemplar = ejemplarService.createEjemplar(ejemplar);
@@ -27,6 +28,7 @@ public class EjemplarController {
     }
 
     // Obtener un ejemplar por su código de barras
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{cod_barra}")
     public ResponseEntity<Ejemplar> getEjemplar(@PathVariable String cod_barra) {
         Ejemplar ejemplar = ejemplarService.getEjemplar(cod_barra);
@@ -38,6 +40,7 @@ public class EjemplarController {
     }
 
     // Actualizar un ejemplar por su código de barras
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/{cod_barra}")
     public ResponseEntity<Ejemplar> updateEjemplar(@PathVariable String cod_barra, @RequestBody Ejemplar nuevoEjemplar) {
         Ejemplar updatedEjemplar = ejemplarService.updateEjemplar(cod_barra, nuevoEjemplar);
@@ -49,6 +52,7 @@ public class EjemplarController {
     }
 
     // Eliminar un ejemplar por su código de barras
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{cod_barra}")
     public ResponseEntity<Void> deleteEjemplar(@PathVariable String cod_barra) {
         Ejemplar deletedEjemplar = ejemplarService.deleteEjemplar(cod_barra);
