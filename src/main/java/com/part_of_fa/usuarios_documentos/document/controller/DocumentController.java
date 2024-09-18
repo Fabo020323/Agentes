@@ -38,4 +38,21 @@ public class DocumentController {
         documentService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{documentId}/addEjemplar")
+    public ResponseEntity<Docu> addEjemplarToDocument(@PathVariable String documentId, @RequestParam String ejemplarCodBarra) {
+        Docu updatedDocu = documentService.addEjemplarToDocument(documentId, ejemplarCodBarra);
+        if (updatedDocu != null) {
+            return ResponseEntity.ok(updatedDocu);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Método en el controlador para filtrar documentos según los criterios
+    @PostMapping("/filter")
+    public List<Docu> filterDocuments(@RequestBody Docu filterCriteria) {
+        return documentService.filterDocuments(filterCriteria);
+    }
+
 }
