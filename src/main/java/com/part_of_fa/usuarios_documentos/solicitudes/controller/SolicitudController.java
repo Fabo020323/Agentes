@@ -25,6 +25,7 @@ public class SolicitudController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Solicitud> getSolicitudById(@PathVariable String id) {
         return solicitudService.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,11 +33,13 @@ public class SolicitudController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public Solicitud createSolicitud(@RequestBody Solicitud solicitud) {
         return solicitudService.save(solicitud);
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Void> deleteSolicitud(@PathVariable String id) {
         solicitudService.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -46,6 +49,7 @@ public class SolicitudController {
 
 
     @GetMapping("/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Solicitud>> getSolicitudesByUserId(@PathVariable String userId) {
         try {
             List<Solicitud> solicitudes = solicitudService.findSolicitudesByUserId(userId);
@@ -57,7 +61,9 @@ public class SolicitudController {
         }
     }
 
+
     @GetMapping("/docu/{docuId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Solicitud>> getSolicitudesByDocuId(@PathVariable String docuId) {
         try {
             List<Solicitud> solicitudes = solicitudService.findSolicitudesByDocuId(docuId);
@@ -69,6 +75,7 @@ public class SolicitudController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/user/{userId}/docu/{docuId}")
     public ResponseEntity<Solicitud> getSolicitudByUserIdAndDocuId(@PathVariable String userId, @PathVariable String docuId) {
         try {
