@@ -4,6 +4,8 @@ import com.part_of_fa.usuarios_documentos.document.entity.Docu;
 import com.part_of_fa.usuarios_documentos.document.repository.DocumentRepository;
 import com.part_of_fa.usuarios_documentos.ejemplares.entity.Ejemplar;
 import com.part_of_fa.usuarios_documentos.ejemplares.service.EjemplarService;
+import com.part_of_fa.usuarios_documentos.utils.exceptions.DuplicateEjemplarException;
+import com.part_of_fa.usuarios_documentos.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +38,23 @@ public class DocumentService {
         Optional<Docu> docuOptional = documentRepository.findById(documentId);
         Ejemplar ejemplar = ejemplarService.getEjemplar(ejemplarCodBarra);
 
-        if (docuOptional.isPresent() && ejemplar != null) {
-            Docu docu = docuOptional.get();
-            docu.getEjemplares().add(ejemplar);
-            return documentRepository.save(docu);
+        if (docuOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Document not found with id: " + documentId);
         }
-        return null;
+
+        if (ejemplar == null) {
+            throw new ResourceNotFoundException("Ejemplar not found with code: " + ejemplarCodBarra);
+        }
+
+        Docu docu = docuOptional.get();
+        if (docu.getEjemplares().stream().anyMatch(e -> e.getId().equals(ejemplar.getId()))) {
+            throw new DuplicateEjemplarException("Ejemplar already added to the document.");
+        }
+
+        docu.getEjemplares().add(ejemplar);
+        return documentRepository.save(docu);
     }
+
 
     // Filtrar documentos por una característica
     public List<Docu> filterDocuments(Docu filterCriteria) {

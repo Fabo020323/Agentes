@@ -24,4 +24,13 @@ public class Ejemplar {
     private String procedencia;
     private Long precio;
     private String estado;
+
+    public String getId() {
+        return cod_barra;  // Asegúrate de que este método esté presente
+    }
+
+    public void setId(String cod_barra) {
+        this.cod_barra = cod_barra;
+    }
+
 }

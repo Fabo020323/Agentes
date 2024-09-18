@@ -2,7 +2,10 @@ package com.part_of_fa.usuarios_documentos.document.controller;
 
 import com.part_of_fa.usuarios_documentos.document.entity.Docu;
 import com.part_of_fa.usuarios_documentos.document.service.DocumentService;
+import com.part_of_fa.usuarios_documentos.utils.exceptions.DuplicateEjemplarException;
+import com.part_of_fa.usuarios_documentos.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +24,6 @@ public class DocumentController {
         return documentService.findAll();
     }
 
-
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<Docu> getDocumentById(@PathVariable String id) {
@@ -29,10 +31,12 @@ public class DocumentController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
-    public Docu createDocument(@RequestBody Docu document) {
-        return documentService.save(document);
+    public ResponseEntity<Docu> createDocument( @RequestBody Docu document) {
+        Docu savedDocument = documentService.save(document);
+        return ResponseEntity.ok(savedDocument);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -45,19 +49,23 @@ public class DocumentController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/{documentId}/addEjemplar")
     public ResponseEntity<Docu> addEjemplarToDocument(@PathVariable String documentId, @RequestParam String ejemplarCodBarra) {
-        Docu updatedDocu = documentService.addEjemplarToDocument(documentId, ejemplarCodBarra);
-        if (updatedDocu != null) {
+        try {
+            Docu updatedDocu = documentService.addEjemplarToDocument(documentId, ejemplarCodBarra);
             return ResponseEntity.ok(updatedDocu);
-        } else {
-            return ResponseEntity.notFound().build();
+        } catch (ResourceNotFoundException | DuplicateEjemplarException ex) {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
-    // Método en el controlador para filtrar documentos según los criterios
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/filter")
-    public List<Docu> filterDocuments(@RequestBody Docu filterCriteria) {
+    public List<Docu> filterDocuments( @RequestBody Docu filterCriteria) {
         return documentService.filterDocuments(filterCriteria);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
 }
